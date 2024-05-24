@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+
 @Entity(name = "Position")
 @Table(name = "positions")
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.util.List;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private Boolean active;
 

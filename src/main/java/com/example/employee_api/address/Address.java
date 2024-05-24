@@ -17,4 +17,14 @@ public class Address {
     private String state;
     private String postalCode;
     private String address2;
+
+    public Address(AddressSaveDTO addressSaveDTO) {
+        this.address = addressSaveDTO.address();
+        this.number = addressSaveDTO.number();
+        this.neighborhood = addressSaveDTO.neighborhood();
+        this.city = addressSaveDTO.city();
+        this.state = addressSaveDTO.state();
+        this.postalCode = addressSaveDTO.postalCode();
+        this.address2 = addressSaveDTO.address2();
+    }
 }
