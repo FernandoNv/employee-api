@@ -27,7 +27,7 @@ public class EmployeeController {
     public ResponseEntity<Page<EmployeeListITemDTO>> getAll(
             @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<EmployeeListITemDTO> page = employeeRepository.findAllByActiveTrue(pageable).map(EmployeeListITemDTO::new);
+        Page<EmployeeListITemDTO> page = employeeRepository.findAllByActiveTrueAndTypeEmployeeEmployee(pageable).map(EmployeeListITemDTO::new);
 
         return ResponseEntity.ok(page);
     }
@@ -56,7 +56,7 @@ public class EmployeeController {
         EmployeeItemDTO employeeDTO = employeeService.create(newEmployee);
 
         URI uri = uriComponentsBuilder
-                .path("/medicos/{id}")
+                .path("/employees/{id}")
                 .buildAndExpand(employeeDTO.id())
                 .toUri();
 
@@ -64,7 +64,7 @@ public class EmployeeController {
     }
 
     @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<EmployeeItemDTO> create(
+    public ResponseEntity<EmployeeItemDTO> update(
             @PathVariable Long id,
             @RequestBody @Valid EmployeeSaveDTO employeeData
     ) {

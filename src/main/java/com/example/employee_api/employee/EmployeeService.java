@@ -26,6 +26,14 @@ public class EmployeeService {
         this.validationsSave = validationsSave;
     }
 
+    public Employee getById(Long id) {
+        return employeeRepository.findByIdAndActiveTrue(id).orElseThrow();
+    }
+
+    public Employee getByEmail(String email) {
+        return employeeRepository.findByEmailAndActiveTrue(email).orElseThrow();
+    }
+
     @Transactional
     public EmployeeItemDTO create(EmployeeSaveDTO employeeSaveDTO) {
         validationsSave.forEach(validation -> validation.validate(employeeSaveDTO));
@@ -37,12 +45,18 @@ public class EmployeeService {
         employee.setDepartment(department);
         employee.setPosition(position);
 
+        if (employeeSaveDTO.typeEmployee() != null) {
+            employee.setTypeEmployee(employeeSaveDTO.typeEmployee());
+        } else {
+            employee.setTypeEmployee(TypeEmployee.EMPLOYEE);
+        }
+
         return new EmployeeItemDTO(employeeRepository.save(employee));
     }
 
     @Transactional
     public EmployeeItemDTO update(Long id, EmployeeSaveDTO employeeData) {
-        Employee employee = employeeRepository.findByIdAndActiveTrue(id).orElseThrow();
+        Employee employee = getById(id);
         validationsSave.forEach(validation -> validation.validate(employeeData));
 
         Department department = departmentRepository.getReferenceById(employeeData.department());

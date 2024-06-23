@@ -9,6 +9,10 @@ public record DepartmentItemListDTO(
 ) {
 
     public DepartmentItemListDTO(Department department) {
-        this(department.getId(), department.getName(), department.getPositionList().stream().map(PositionItemListDTO::new).toList());
+        this(
+                department.getId(),
+                department.getName(),
+                department.getPositionList().stream().map(PositionItemListDTO::new).toList()
+        );
     }
 }

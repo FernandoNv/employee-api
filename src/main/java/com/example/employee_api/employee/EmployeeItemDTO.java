@@ -1,6 +1,7 @@
 package com.example.employee_api.employee;
 
 import com.example.employee_api.address.AddressDTO;
+import jakarta.validation.constraints.Null;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public record EmployeeItemDTO(
         String position,
         TypeEmployee typeEmployee
 ) {
-    EmployeeItemDTO(Employee employee) {
+    public EmployeeItemDTO(Employee employee) {
         this(
                 employee.getId(),
                 employee.getName(),
@@ -29,9 +30,9 @@ public record EmployeeItemDTO(
                 employee.getEmail(),
                 employee.getBirthDate(),
                 employee.getSalary(),
-                new AddressDTO(employee.getAddress()),
-                employee.getDepartment().getName(),
-                employee.getPosition().getName(),
+                employee.getTypeEmployee().equals(TypeEmployee.EMPLOYEE) ? new AddressDTO(employee.getAddress()) : null,
+                employee.getTypeEmployee().equals(TypeEmployee.EMPLOYEE) ? employee.getDepartment().getName() : null,
+                employee.getTypeEmployee().equals(TypeEmployee.EMPLOYEE) ? employee.getPosition().getName() : null,
                 employee.getTypeEmployee()
         );
     }

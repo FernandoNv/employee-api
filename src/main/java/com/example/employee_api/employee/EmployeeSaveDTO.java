@@ -32,6 +32,8 @@ public record EmployeeSaveDTO(
         @NotNull
         Seniority seniority,
         @NotNull
-        BigDecimal salary
+        BigDecimal salary,
+        @NotNull
+        TypeEmployee typeEmployee
 ) {
 }

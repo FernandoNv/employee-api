@@ -5,6 +5,7 @@ import com.example.employee_api.department.Department;
 import com.example.employee_api.department.Position;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class Employee {
     private Boolean active;
 
     @Enumerated(EnumType.STRING)
+    @ColumnDefault(value = "EMPLOYEE")
     private TypeEmployee typeEmployee;
 
     @Enumerated(EnumType.STRING)
@@ -85,6 +87,9 @@ public class Employee {
         }
         if (employeeSaveDTO.address() != null) {
             this.address = new Address(employeeSaveDTO.address());
+        }
+        if (employeeSaveDTO.typeEmployee() != null) {
+            this.typeEmployee = employeeSaveDTO.typeEmployee();
         }
     }
 }

@@ -83,5 +83,29 @@ VALUES ('Leo Turner', '345.672.109-87', '(98) 97654-3210', 'leo.turner@example.c
         1212, 'Suburbia', 'Metropolis', 'NY', '12345-123', NULL, 1, 2, 'SENIOR');
 INSERT INTO employees (name, cpf, phone, email, birth_date, salary, address, number, neighborhood, city, state,
                        postal_code, address2, department_id, position_id, seniority)
-VALUES ('Mia Collins', '456.783.210-98', '(98) 97654-3210', 'mia.collins@example.com', '1989-11-19 00:00:00', 72000,
+VALUES ('Mia Collins', '456.783.210-98', '(98) 97654-3210', 'mia.collins@example.com', '1989-11-19', 72000,
         '1010 Maple St', 1313, 'Downtown', 'Metropolis', 'NY', '12345-123', NULL, 1, 3, 'PLENO');
+
+INSERT INTO employees (name, cpf, phone, email, birth_date, salary, type_employee)
+VALUES ('Fernando Vieira', '008.124.332-75', '(98) 97654-3210', 'fernando.vieira@example.com', '1996-12-17', 100000,
+        'MANAGER');
+
+INSERT INTO employees (name, cpf, phone, email, birth_date, salary, type_employee)
+VALUES ('Carina Laureano', '998.000.332-75', '(98) 97654-3210', 'carina.laureano@example.com', '1997-12-21', 100000,
+        'MANAGER');
+
+INSERT INTO employees (name, cpf, phone, email, birth_date, salary, type_employee)
+VALUES ('Luzia Nascimento', '772.112.999-23', '(98) 97654-3210', 'luzia.nascimento@example.com', '1968-02-24', 100000,
+        'MANAGER');
+
+UPDATE DEPARTMENTS
+SET manager_id = '14'
+WHERE id = '1';
+
+UPDATE DEPARTMENTS
+SET manager_id = '15'
+WHERE id = '2';
+
+UPDATE DEPARTMENTS
+SET manager_id = '16'
+WHERE id = '3';
