@@ -28,11 +28,12 @@ CREATE TABLE IF NOT EXISTS employees
     city          VARCHAR(100)       NOT NULL,
     state         VARCHAR(2)         NOT NULL,
     postal_code   VARCHAR(9)         NOT NULL,
-    address2      VARCHAR(100) DEFAULT NULL,
-    active        BOOL         DEFAULT TRUE,
-    department_id BIGINT             NOT NULL,
-    position_id   BIGINT             NOT NULL,
-    seniority     VARCHAR(100)       NOT NULL,
+    address2      VARCHAR(100)       DEFAULT NULL,
+    active        BOOL               DEFAULT TRUE,
+    department_id BIGINT             NULL,
+    position_id   BIGINT             NULL,
+    seniority     VARCHAR(6)         NULL,
+    type_employee VARCHAR(8)         NOT NULL DEFAULT 'EMPLOYEE',
     CONSTRAINT fk_department_employee FOREIGN KEY (department_id) REFERENCES departments (id),
     CONSTRAINT fk_position_employee FOREIGN KEY (position_id) REFERENCES positions (id)
 );

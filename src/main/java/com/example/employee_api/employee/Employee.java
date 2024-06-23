@@ -30,6 +30,9 @@ public class Employee {
     private Boolean active;
 
     @Enumerated(EnumType.STRING)
+    private TypeEmployee typeEmployee;
+
+    @Enumerated(EnumType.STRING)
     private Seniority seniority;
 
     @Embedded

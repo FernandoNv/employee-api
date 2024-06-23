@@ -16,7 +16,8 @@ public record EmployeeItemDTO(
         BigDecimal salary,
         AddressDTO address,
         String department,
-        String position
+        String position,
+        TypeEmployee typeEmployee
 ) {
     EmployeeItemDTO(Employee employee) {
         this(
@@ -30,7 +31,8 @@ public record EmployeeItemDTO(
                 employee.getSalary(),
                 new AddressDTO(employee.getAddress()),
                 employee.getDepartment().getName(),
-                employee.getPosition().getName()
+                employee.getPosition().getName(),
+                employee.getTypeEmployee()
         );
     }
 }
