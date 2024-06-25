@@ -29,4 +29,19 @@ public class Department {
     private List<Position> positionList;
     @OneToOne
     private Employee manager;
+
+    public Department(DepartmentSaveDTO departmentSaveDTO) {
+        this.name = departmentSaveDTO.name();
+        this.active = departmentSaveDTO.active();
+    }
+
+    public void delete() {
+        this.active = false;
+    }
+
+    public void updateValues(DepartmentSaveDTO departmentData) {
+        this.name = departmentData.name();
+        this.active = departmentData.active();
+    }
+
 }

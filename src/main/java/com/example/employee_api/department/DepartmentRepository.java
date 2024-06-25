@@ -15,4 +15,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
                 WHERE p.id = :positionId AND d.id = :departmentId
             """)
     Optional<Position> getPositionByIdAndDepartmentById(Long positionId, Long departmentId);
+
+    Optional<Employee> findByIdAndActiveTrue(Long id);
 }
