@@ -11,8 +11,8 @@ public record EmployeeListITemDTO(
         this(
                 e.getId(),
                 e.getName(),
-                e.getDepartment().getName(),
-                e.getPosition().getName(),
+                e.getDepartment() != null ? e.getDepartment().getName() : null,
+                e.getPosition() != null ? e.getPosition().getName() : null,
                 e.getSeniority()
         );
     }

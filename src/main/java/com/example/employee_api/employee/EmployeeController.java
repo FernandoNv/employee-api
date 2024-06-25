@@ -15,11 +15,9 @@ import java.net.URI;
 @RestController
 @RequestMapping(value = "/employees")
 public class EmployeeController {
-    private final EmployeeRepository employeeRepository;
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -27,14 +25,23 @@ public class EmployeeController {
     public ResponseEntity<Page<EmployeeListITemDTO>> getAll(
             @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<EmployeeListITemDTO> page = employeeRepository.findAllByActiveTrueAndTypeEmployeeEmployee(pageable).map(EmployeeListITemDTO::new);
+        Page<EmployeeListITemDTO> page = employeeService.getAllEmployee(pageable);
+
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping(value = "/managers", produces = "application/json")
+    public ResponseEntity<Page<EmployeeListITemDTO>> getAllManagers(
+            @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<EmployeeListITemDTO> page = employeeService.getAllManager(pageable);
 
         return ResponseEntity.ok(page);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<EmployeeItemDTO> getById(@PathVariable Long id) {
-        Employee employee = employeeRepository.findByIdAndActiveTrue(id).orElseThrow();
+        Employee employee = employeeService.getById(id);
 
         return ResponseEntity.ok(new EmployeeItemDTO(employee));
     }
@@ -42,7 +49,7 @@ public class EmployeeController {
     @Transactional
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        Employee employee = employeeRepository.findByIdAndActiveTrue(id).orElseThrow();
+        Employee employee = employeeService.getById(id);
         employee.delete();
 
         return ResponseEntity.noContent().build();

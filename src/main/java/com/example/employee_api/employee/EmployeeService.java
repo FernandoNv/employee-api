@@ -5,6 +5,8 @@ import com.example.employee_api.department.DepartmentRepository;
 import com.example.employee_api.department.Position;
 import com.example.employee_api.employee.validations.EmployeeSaveValidation;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,5 +70,13 @@ public class EmployeeService {
         employee.updateValues(employeeData);
 
         return new EmployeeItemDTO(employeeRepository.save(employee));
+    }
+
+    public Page<EmployeeListITemDTO> getAllEmployee(Pageable pageable) {
+        return employeeRepository.findAllByActiveTrueAndTypeEmployeeEmployee(pageable).map(EmployeeListITemDTO::new);
+    }
+
+    public Page<EmployeeListITemDTO> getAllManager(Pageable pageable) {
+        return employeeRepository.findAllByActiveTrueAndTypeEmployeeManager(pageable).map(EmployeeListITemDTO::new);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.nio.channels.FileChannel;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findByIdAndActiveTrue(Long id);
 
     Optional<Employee> findByEmailAndActiveTrue(String id);
+
+    @Query("""
+                SELECT e FROM Employee e
+                WHERE e.active = true
+                    AND e.typeEmployee = 'MANAGER'
+            """)
+    Page<Employee> findAllByActiveTrueAndTypeEmployeeManager(Pageable pageable);
 }
