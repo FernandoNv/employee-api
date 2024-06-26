@@ -38,34 +38,34 @@ public class EmployeeService {
 
     @Transactional
     public EmployeeItemDTO create(EmployeeSaveDTO employeeSaveDTO) {
-        validationsSave.forEach(validation -> validation.validate(employeeSaveDTO));
-
-        Employee employee = new Employee(employeeSaveDTO);
-        Department department = departmentRepository.getReferenceById(employeeSaveDTO.department());
-        Position position = departmentRepository
-                .getPositionByIdAndDepartmentById(employeeSaveDTO.position(), employeeSaveDTO.department()).orElseThrow();
-        employee.setDepartment(department);
-        employee.setPosition(position);
-
-        if (employeeSaveDTO.typeEmployee() != null) {
-            employee.setTypeEmployee(employeeSaveDTO.typeEmployee());
+        Employee employee;
+        if (employeeSaveDTO.typeEmployee().equals(TypeEmployee.EMPLOYEE)) {
+            validationsSave.forEach(validation -> validation.validate(employeeSaveDTO));
+            employee = new Employee(employeeSaveDTO);
+            Department department = departmentRepository.getReferenceById(employeeSaveDTO.department());
+            Position position = departmentRepository
+                    .getPositionByIdAndDepartmentById(employeeSaveDTO.position(), employeeSaveDTO.department()).orElseThrow();
+            employee.setDepartment(department);
+            employee.setPosition(position);
         } else {
-            employee.setTypeEmployee(TypeEmployee.EMPLOYEE);
+            employee = new Employee(employeeSaveDTO);
         }
 
+        employee.setTypeEmployee(employeeSaveDTO.typeEmployee());
         return new EmployeeItemDTO(employeeRepository.save(employee));
     }
 
     @Transactional
     public EmployeeItemDTO update(Long id, EmployeeSaveDTO employeeData) {
         Employee employee = getById(id);
-        validationsSave.forEach(validation -> validation.validate(employeeData));
-
-        Department department = departmentRepository.getReferenceById(employeeData.department());
-        Position position = departmentRepository
-                .getPositionByIdAndDepartmentById(employeeData.position(), employeeData.department()).orElseThrow();
-        employee.setDepartment(department);
-        employee.setPosition(position);
+        if (employeeData.typeEmployee().equals(TypeEmployee.EMPLOYEE)) {
+            validationsSave.forEach(validation -> validation.validate(employeeData));
+            Department department = departmentRepository.getReferenceById(employeeData.department());
+            Position position = departmentRepository
+                    .getPositionByIdAndDepartmentById(employeeData.position(), employeeData.department()).orElseThrow();
+            employee.setDepartment(department);
+            employee.setPosition(position);
+        }
 
         employee.updateValues(employeeData);
 
@@ -73,7 +73,7 @@ public class EmployeeService {
     }
 
     public Page<EmployeeListITemDTO> getAllEmployee(Pageable pageable) {
-        return employeeRepository.findAllByActiveTrueAndTypeEmployeeEmployee(pageable).map(EmployeeListITemDTO::new);
+        return employeeRepository.findAllByActiveTrue(pageable).map(EmployeeListITemDTO::new);
     }
 
     public Page<EmployeeListITemDTO> getAllManager(Pageable pageable) {

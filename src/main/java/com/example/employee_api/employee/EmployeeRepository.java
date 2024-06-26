@@ -16,6 +16,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             """)
     Page<Employee> findAllByActiveTrueAndTypeEmployeeEmployee(Pageable pageable);
 
+    @Query("""
+                SELECT e FROM Employee e WHERE e.active = true
+            """)
+    Page<Employee> findAllByActiveTrue(Pageable pageable);
+
     Optional<Employee> findByIdAndActiveTrue(Long id);
 
     Optional<Employee> findByEmailAndActiveTrue(String id);

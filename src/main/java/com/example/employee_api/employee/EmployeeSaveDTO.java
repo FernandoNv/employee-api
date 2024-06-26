@@ -25,13 +25,9 @@ public record EmployeeSaveDTO(
         @NotNull
         @Valid
         AddressSaveDTO address,
-        @NotNull
         Long department,
-        @NotNull
         Long position,
-        @NotNull
         Seniority seniority,
-        @NotNull
         BigDecimal salary,
         @NotNull
         TypeEmployee typeEmployee

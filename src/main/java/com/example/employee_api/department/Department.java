@@ -21,7 +21,7 @@ public class Department {
     private String name;
     private Boolean active;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Employee> employeeList;
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Position> positionList;

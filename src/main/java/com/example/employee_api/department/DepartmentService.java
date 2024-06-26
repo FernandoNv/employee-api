@@ -66,16 +66,6 @@ public class DepartmentService {
             department.setManager(employee);
         }
 
-        Department finalDepartment = department;
-        List<Position> positions = departmentSaveDTO.positions().stream().map(p -> {
-            Position position = new Position();
-            position.setName(p.name());
-            position.setDepartment(finalDepartment);
-            position.setActive(true);
-
-            return position;
-        }).toList();
-        department.getPositionList().addAll(positions);
         departmentRepository.save(department);
 
         return new DepartmentItemDTO(getById(department.getId()));
