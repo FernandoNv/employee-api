@@ -31,4 +31,10 @@ public class Department {
     public void delete() {
         active = false;
     }
+
+    public void update(DepartmentSaveDTO departmentSaveDTO) {
+        if (departmentSaveDTO.name() != null) {
+            this.name = departmentSaveDTO.name();
+        }
+    }
 }

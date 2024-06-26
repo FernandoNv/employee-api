@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DepartmentService {
@@ -54,4 +55,30 @@ public class DepartmentService {
         Department department = getById(id);
         department.delete();
     }
+
+    @Transactional
+    public DepartmentItemDTO update(Long id, DepartmentSaveDTO departmentSaveDTO) {
+        Department department = getById(id);
+        department.update(departmentSaveDTO);
+
+        if (departmentSaveDTO.idManager() != null && !Objects.equals(department.getManager().getId(), departmentSaveDTO.idManager())) {
+            Employee employee = employeeRepository.getReferenceById(departmentSaveDTO.idManager());
+            department.setManager(employee);
+        }
+
+        Department finalDepartment = department;
+        List<Position> positions = departmentSaveDTO.positions().stream().map(p -> {
+            Position position = new Position();
+            position.setName(p.name());
+            position.setDepartment(finalDepartment);
+            position.setActive(true);
+
+            return position;
+        }).toList();
+        department.getPositionList().addAll(positions);
+        departmentRepository.save(department);
+
+        return new DepartmentItemDTO(getById(department.getId()));
+    }
+
 }

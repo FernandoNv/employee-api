@@ -45,4 +45,21 @@ public class DepartmentController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DepartmentItemDTO> update(
+            @PathVariable Long id,
+            @RequestBody @Valid DepartmentSaveDTO departmentSaveDTO
+    ) {
+        DepartmentItemDTO departmentDTO = departmentService.update(id, departmentSaveDTO);
+
+        return ResponseEntity.ok(departmentDTO);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<DepartmentItemDTO> getById(@PathVariable Long id) {
+        DepartmentItemDTO departmentDTO = new DepartmentItemDTO(departmentService.getById(id));
+
+        return ResponseEntity.ok(departmentDTO);
+    }
 }

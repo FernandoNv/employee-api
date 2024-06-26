@@ -10,7 +10,7 @@ public record DepartmentItemDTO(
         String name,
         Long idManager,
         @NotNull @Valid
-        List<PositionItemListDTO> positionList
+        List<PositionItemListDTO> positions
 ) {
     public DepartmentItemDTO(Department department) {
         this(
